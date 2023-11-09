@@ -68,16 +68,16 @@ struct Cliente
     float saldo;
     int estado;
 };
-
 struct Cliente listaClientes[10];
 void cargarClientes();
 
-void ingresoCapital(int nroCliente);                     // Prototipo funcion para ingresar dinero
-void extraccionCapital(int nroCliente);                  // Prototipo funcion para retirar dinero
-void transferenciaEntreCuentas(int nroCliente); // Prototipo funcion para transferencia
+void ingresoCapital(int nroCliente);        // Prototipo funcion para ingresar dinero
+void extraccionCapital(int nroCliente);     // Prototipo funcion para retirar dinero
+void realizarTransferencia(int nroCliente); // Prototipo funcion para transferencia
 
 // Global
 int operacionesMaximas;
+int cuentasClientesMaximos = 10;
 
 void main()
 {
@@ -108,19 +108,19 @@ void main()
                 printf("Ingrese su n%cmero de cuenta:\n", 163);
                 scanf("%d", &nroCuenta);
 
-                if (nroCuenta < 1 || nroCuenta > 10)
+                if (nroCuenta < 1 || nroCuenta > cuentasClientesMaximos)
                 {
-                    printf("Ingrese un numero de cuenta entre 1 y 10 \n");
+                    printf("Ingrese un numero de cuenta entre 1 y %d \n", cuentasClientesMaximos);
                 }
 
-            } while (nroCuenta < 1 || nroCuenta > 10);
-            while (i < 10)
+            } while (nroCuenta < 1 || nroCuenta > cuentasClientesMaximos);
+            while (i < cuentasClientesMaximos)
             {
 
                 if (listaClientes[i].nroCuenta == nroCuenta)
                 {
                     nroCliente = i;
-                    i = 10;
+                    i = cuentasClientesMaximos;
                     banderaIngreso = 1;
                 }
 
@@ -205,7 +205,7 @@ void main()
                         break;
 
                     case 4:
-                        void transferenciaEntreCuentas(int nroCliente); // Operando
+                        realizarTransferencia(nroCliente);
                         break;
 
                     case 5:
@@ -364,20 +364,67 @@ void extraccionCapital(int nroCliente)
     printf("Su saldo actual es: $%.2f \n", listaClientes[nroCliente].saldo);
 }
 
-void transferenciaEntreCuentas(int nroCliente)
+void realizarTransferencia(int nroCliente)
 {
-    int nroCuentaATransferir;
+    int cuentaDestino, monto, distinto, transferencia, i;
+    transferencia = 0;
+    i = 0;
 
     do
     {
-    printf("Ingrese el n%cmero cuenta a la que desea transferir \n", 163);
-    scanf("%d", &nroCuentaATransferir);
-    if (nroCuentaATransferir == listaClientes[nroCliente].nroCuenta)
-    {
-        printf("No te puedes autotransferir dinero, cuenta origin y destino iguales \n");
-    }
-    
+        printf("Ingrese su n%cmero de cuenta destino:\n", 163);
+        scanf("%d", &cuentaDestino);
 
-    } while (nroCuentaATransferir == listaClientes[nroCliente].nroCuenta);
-    
+        if (cuentaDestino < 1 || cuentaDestino > cuentasClientesMaximos)
+        {
+            printf("Ingrese un n%cmero de cuenta entre 1 y %d \n", 163, cuentasClientesMaximos);
+        }
+
+    } while (cuentaDestino < 1 || cuentaDestino > cuentasClientesMaximos);
+
+    if (listaClientes[nroCliente].nroCuenta != cuentaDestino)
+    {
+        while (i < cuentasClientesMaximos) 
+        {
+
+            if (listaClientes[i].nroCuenta == cuentaDestino)
+            {
+                if (listaClientes[i].estado != 0)
+                {
+                    do
+                    {
+                        printf("Ingrese la cantidad de dinero que desea transferir \n");
+                        scanf("%d", &monto);
+
+                        if (monto <= 0)
+                        {
+                            printf("El monto debe ser mayor a 0.\n");
+                        }
+                        else if (listaClientes[nroCliente].saldo < monto)
+                        {
+                            printf("No posees saldo suficiente para realizar esta transferencia.\n");
+                            break;
+                        }
+
+                    } while (monto <= 0 || listaClientes[nroCliente].saldo < monto);
+
+                    listaClientes[i].saldo += monto;
+                    listaClientes[nroCliente].saldo -= monto;
+                   
+                    i = cuentasClientesMaximos;
+                }
+                else
+                {
+                    printf("La cuenta destino est%c bloqueada.\n", 160);
+                   
+                }
+            }
+
+            i++;
+        }
+    }
+    else
+    {
+        printf("La cuenta origen y destino debe ser diferente.\n");
+    }
 }
