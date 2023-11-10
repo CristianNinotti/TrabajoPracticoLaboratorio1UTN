@@ -58,3 +58,8 @@ La resolución deberá contemplar el uso de buenas prácticas de programación. 
 de arreglos y funciones, así como el uso correcto de estructuras.
 El archivo a entregar debe contener en su interior a modo de comentario a los integrantes
 del TPI. Sólo hará entrega del TPI un solo integrante del grupo.*/
+
+
+
+/// Realizado por: Nahuel Gonzalez, Ninotti Cristian, Francisco Poli Veliz, Juan Ignacio Zucco ///
+/// Horas trabajadas: 20 Horas ///
