@@ -9,7 +9,7 @@
 #include <string.h>
 
 // DECLARACIÓN DEL STRUCT DE CLIENTE
-struct Cliente
+struct Cliente                                 // Coleccion de variables de distintos tipos  // bajo el mismo nombre, clientes en este caso
 {
     int nroCuenta;
     char contrasenia[10];
@@ -95,7 +95,7 @@ void main()
             printf("Ingrese su contrase%ca:\n", 164);
             scanf("%s", &contrasenia);
 
-            if (strcmp(listaClientes[nroCliente].contrasenia, contrasenia) != 0)
+            if (strcmp(listaClientes[nroCliente].contrasenia, contrasenia) != 0)  // Si devuelve 0 esta ok, si devuelve otro numero es incorrecto
             {
                 contadorIntentos--;
                 if (contadorIntentos != 0)
@@ -106,11 +106,11 @@ void main()
                 }
             }
 
-        } while (strcmp(listaClientes[nroCliente].contrasenia, contrasenia) != 0 && contadorIntentos > 0);
+        } while (strcmp(listaClientes[nroCliente].contrasenia, contrasenia) != 0 && contadorIntentos > 0);  //Repite siempre que sean distintas y tenga intentos en el contador
 
-        if (contadorIntentos == 0)
+        if (contadorIntentos == 0)                  // Si es 0 te bloquea la cuenta
         {
-            listaClientes[nroCliente].estado = 0;
+            listaClientes[nroCliente].estado = 0;   // Si es 0 te bloquea la cuenta
         }
 
         // INGRESO AL PROGRAMA
